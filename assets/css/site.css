@@ -1,0 +1,412 @@
+/* Advocatenkantoor Hazel Albayrak — huisstijl, tweede versie.
+   Redactioneel en bijna monochroom, naar het voorbeeld van harvey.ai: een
+   diep houtskool als hoofdgrond, ivoor als lichte grond, brons alleen als
+   accent. Cormorant Garamond voor koppen, Manrope voor tekst en bediening.
+   De hero toont, zoals Harvey zijn product toont, de digitale voordeur van het
+   kantoor: de vraagmodule in een donker kader op architectuurfotografie. */
+:root{
+  --ink:#141413; --ink-2:#1E1D1B; --ink-3:#2A2927;
+  --ivory:#F1EFEA; --ivory-2:#E7E3DB; --white:#FAF9F6;
+  --bronze:#A2865A; --bronze-2:#C9B48F; --bronze-3:#E6DCC7; --olive:#454A3C;
+  --muted:#8A857D; --muted-d:#9A958C; --line:#D9D4CA; --line-d:rgba(241,239,234,.14);
+  --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --sans:"Manrope","Helvetica Neue",Arial,sans-serif;
+  --maxw:1240px; --pad:clamp(20px,5vw,72px);
+  --t:420ms cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ivory);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--bronze);outline-offset:3px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--white);padding:8px 14px;z-index:100}
+.skip:focus{left:12px}
+
+/* type */
+.h1{font-family:var(--serif);font-weight:500;font-size:clamp(44px,6.4vw,88px);line-height:.98;letter-spacing:-.02em;margin:0 0 26px;text-wrap:balance}
+.h2{font-family:var(--serif);font-weight:500;font-size:clamp(32px,4.4vw,58px);line-height:1.02;letter-spacing:-.015em;margin:0 0 22px;text-wrap:balance}
+.h2-klein{font-size:clamp(24px,2.6vw,32px);margin-top:44px}
+h3{font-family:var(--serif);font-weight:600;font-size:23px;line-height:1.2;margin:0 0 8px}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--bronze);margin:0 0 18px}
+.lead{font-family:var(--serif);font-size:clamp(20px,2vw,25px);line-height:1.42;color:var(--ink-3);max-width:58ch;margin:0 0 28px}
+.fijn{font-size:13.5px;color:var(--muted)}
+p{margin:0 0 16px}
+.proza{max-width:66ch}
+.proza p{font-size:17px;line-height:1.7}
+.proza h2{font-family:var(--serif);font-size:30px;font-weight:600;margin:40px 0 12px;line-height:1.15}
+.proza h3{font-size:21px;margin-top:28px}
+.proza ul{padding-left:20px}
+.proza.smal{max-width:70ch}
+.link-pijl{font-weight:600;text-decoration:none;border-bottom:1px solid var(--bronze-2);padding-bottom:2px;transition:border-color var(--t)}
+.link-pijl:hover{border-color:currentColor}
+
+/* knoppen — hoekig, compact, zoals Harvey */
+.knop{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--white);border:1px solid var(--ink);padding:13px 22px;font:600 13.5px/1 var(--sans);letter-spacing:.01em;text-decoration:none;cursor:pointer;transition:background var(--t),color var(--t),border-color var(--t)}
+.knop:hover{background:var(--ink-3);border-color:var(--ink-3)}
+.knop-licht{background:transparent;color:var(--ink)}
+.knop-licht:hover{background:var(--ink);color:var(--white)}
+.knop-omgekeerd{background:var(--ivory);color:var(--ink);border-color:var(--ivory)}
+.knop-omgekeerd:hover{background:var(--white);border-color:var(--white)}
+.knop-lijn{background:transparent;color:var(--ivory);border-color:rgba(241,239,234,.35)}
+.knop-lijn:hover{background:rgba(241,239,234,.08);border-color:var(--ivory)}
+.knop-kop{padding:11px 18px;font-size:13px}
+
+/* kop — navigatie
+   Zes onderdelen plus een knop passen pas comfortabel vanaf 64em (1024px).
+   Daaronder een echt menu: groot, serif, met de knop erin. Breekpunten in em
+   zodat ze meeschalen met de tekstgrootte van de gebruiker (PWA-regel). */
+/* Geen backdrop-filter in rust en nooit als het menu open is: een filter op
+   de kop maakt haar het containing block voor position:fixed, en dan zit het
+   schermvullende menu gevangen in de kopbalk. */
+.kop{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px var(--pad);background:rgba(241,239,234,.92);transition:box-shadow var(--t)}
+.kop.gescrold:not(.menu-open){backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 1px 0 var(--line)}
+.woordmerk{display:grid;grid-template-columns:auto auto;grid-template-rows:auto auto;column-gap:6px;text-decoration:none;line-height:1;align-items:baseline;flex:0 0 auto}
+.woordmerk .wm-1,.woordmerk .wm-2{font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:.005em;white-space:nowrap}
+.woordmerk .wm-2{font-weight:500}
+.woordmerk .wm-3{grid-column:1/3;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--bronze);margin-top:5px;white-space:nowrap}
+.woordmerk.groot .wm-1,.woordmerk.groot .wm-2{font-size:36px}
+.nav{display:flex;align-items:center;gap:18px}
+.nav ul{list-style:none;margin:0;padding:0;display:flex;gap:26px}
+.nav li{white-space:nowrap}
+.nav .nav-cta,.nav .nav-adres{display:none}
+.nav a{text-decoration:none;font-size:14.5px;font-weight:600;position:relative;padding:8px 0;color:var(--ink);display:inline-block}
+.nav a::after{content:"";position:absolute;left:0;right:100%;bottom:2px;height:1.5px;background:var(--bronze);transition:right var(--t)}
+.nav a:hover::after,.nav a[aria-current]::after{right:0}
+.nav a[aria-current]{color:var(--bronze)}
+.knop-kop{white-space:nowrap;flex:0 0 auto}
+.nav-knop{display:none;align-items:center;gap:10px;height:44px;padding:0 4px 0 12px;background:transparent;border:1px solid var(--ink);color:var(--ink);cursor:pointer;font:600 13px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase}
+.nav-knop .nk-ic{display:flex;flex-direction:column;justify-content:center;gap:5px;width:40px;height:42px;align-items:center}
+.nav-knop .nk-ic span{display:block;width:20px;height:2px;background:currentColor;transition:transform var(--t),opacity var(--t)}
+.nav-knop[aria-expanded="true"] .nk-ic span:first-child{transform:translateY(7px) rotate(45deg)}
+.nav-knop[aria-expanded="true"] .nk-ic span:nth-child(2){opacity:0}
+.nav-knop[aria-expanded="true"] .nk-ic span:last-child{transform:translateY(-7px) rotate(-45deg)}
+@media (max-width:64em){
+  .nav-knop{display:inline-flex}
+  .nav ul{display:none;position:fixed;left:0;right:0;top:0;bottom:0;padding:88px var(--pad) 40px;background:var(--ivory);flex-direction:column;gap:0;z-index:40;overflow:auto}
+  .nav ul.open{display:flex}
+  .nav li{white-space:normal}
+  .nav a{display:block;padding:16px 0;font-family:var(--serif);font-size:clamp(28px,6vw,40px);font-weight:500;border-bottom:1px solid var(--line);line-height:1.1}
+  .nav a::after{display:none}
+  .nav a[aria-current]{color:var(--bronze)}
+  .nav .nav-cta,.nav .nav-adres{display:block}
+  .nav .nav-cta{margin-top:26px;border:0;padding:0}
+  .nav .nav-cta .knop{width:100%;justify-content:center;padding:18px;font-size:15px}
+  .nav .nav-adres{border:0;padding-top:22px;font-family:var(--sans);font-size:14px;color:var(--muted);line-height:1.6}
+  .kop{z-index:60}
+  .kop.menu-open{background:var(--ivory)}
+}
+@media (max-width:48em){ .knop-kop{display:none} }
+@media (max-width:30em){ .nav-knop .nk-tekst{display:none} .nav-knop{padding-left:0} }
+body.menu-open{overflow:hidden}
+
+/* secties */
+main{display:block}
+.sectie{max-width:var(--maxw);margin:0 auto;padding:clamp(64px,9vw,128px) var(--pad)}
+.sectie+.sectie{padding-top:0}
+/* Een sectie met eigen achtergrond (donker) draagt haar eigen bovenruimte, en
+   de lichte sectie die erop volgt ook: de witruimte van de vorige sectie zit
+   dan in het donkere vlak en telt niet meer mee. Zonder deze twee regels kleeft
+   het eyebrow van "Beoordelingen" tegen de onderkant van het cijferblok. */
+.sectie+.sectie.betr,.sectie+.sectie.contact-cta{padding-top:clamp(72px,10vw,150px)}
+.betr+.sectie:not(.donker),.donker+.sectie,.contact-cta+.sectie{padding-top:clamp(64px,9vw,128px)}
+.kop-sectie{padding-bottom:clamp(24px,4vw,48px)}
+.kop-sectie+.sectie{padding-top:clamp(24px,4vw,48px)}
+.donker{background:var(--ink);color:var(--ivory);max-width:none}
+.donker>*{max-width:var(--maxw);margin-left:auto;margin-right:auto}
+.donker .eyebrow{color:var(--bronze-2)}
+.donker .lead{color:var(--ivory);opacity:.88}
+.donker .fijn{color:var(--muted-d)}
+
+/* hero — Harvey-patroon: kop links, ondersteunende zin rechtsboven, daaronder het product in een donker kader */
+.hero{max-width:var(--maxw);margin:0 auto;padding:clamp(40px,6vw,80px) var(--pad) 0;display:grid;grid-template-columns:7fr 5fr;gap:clamp(28px,5vw,80px);align-items:start}
+.hero-tekst .h1{margin-bottom:22px}
+.hero-zij{padding-top:clamp(10px,2.4vw,44px);display:flex;flex-direction:column;gap:18px}
+.hero-zij p{font-size:15.5px;line-height:1.6;color:var(--ink-3);max-width:40ch;margin:0}
+.hero-acties{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.hero-kader{max-width:var(--maxw);margin:clamp(36px,5vw,64px) auto 0;padding:0 var(--pad)}
+.kader-donker{position:relative;background:var(--ink);border-radius:6px;overflow:hidden;box-shadow:0 30px 80px rgba(20,20,19,.25);min-height:520px;display:grid;grid-template-columns:1.1fr 1fr}
+.kader-beeld{position:relative;min-height:320px}
+.kader-beeld img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.55) contrast(1.02);opacity:.92}
+.kader-beeld::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,20,19,0) 55%,var(--ink) 100%)}
+.kader-beeld .bijschrift{position:absolute;left:24px;bottom:22px;z-index:2;color:var(--ivory);font-family:var(--serif);font-style:italic;font-size:18px;opacity:.85}
+.kader-inhoud{padding:34px 34px 30px;display:flex;flex-direction:column;justify-content:center;gap:16px;color:var(--ivory)}
+.kader-inhoud .eyebrow{margin-bottom:6px;color:var(--bronze-2)}
+.kader-inhoud .li-vak{background:var(--ink-2);border-color:var(--line-d);color:var(--ivory)}
+.kader-inhoud .li-vraag{color:var(--ivory)}
+.kader-inhoud .li-chip{background:transparent;border-color:rgba(241,239,234,.22);color:var(--ivory)}
+.kader-inhoud .li-chip:hover{border-color:var(--ivory)}
+.kader-inhoud .li-chip[aria-pressed="true"]{background:var(--ivory);color:var(--ink);border-color:var(--ivory)}
+.kader-inhoud .knop{background:var(--ivory);color:var(--ink);border-color:var(--ivory)}
+.kader-inhoud .knop:hover{background:var(--white)}
+.kader-inhoud .li-credit{color:var(--muted-d)}
+.kader-inhoud .li-credit b{color:var(--ivory)}
+
+/* bewijsmuur — zoals Harvey's logomuur, maar met haar universiteiten */
+.muur{max-width:var(--maxw);margin:clamp(48px,6vw,80px) auto 0;padding:0 var(--pad)}
+.muur p{font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:center;margin:0 0 22px}
+.muur ul{list-style:none;margin:0;padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);gap:14px 32px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.muur li{font-family:var(--serif);font-size:19px;font-weight:600;color:var(--ink-3);text-align:center;letter-spacing:.01em;line-height:1.25}
+.muur li small{display:block;font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+
+/* cijfers — Harvey's statistiekenrij */
+.cijfers{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line-d)}
+.cijfers li{list-style:none;padding:34px 28px 30px 0;border-left:1px solid var(--line-d);padding-left:28px}
+.cijfers li:first-child{border-left:0;padding-left:0}
+.cijfers b{display:block;font-family:var(--serif);font-weight:500;font-size:clamp(44px,5vw,72px);line-height:1;letter-spacing:-.02em;margin-bottom:10px}
+.cijfers span{font-size:13.5px;color:var(--muted-d);line-height:1.45}
+
+/* Lawy-sectie (op binnenpagina's) */
+.lawy-sectie{display:grid;grid-template-columns:5fr 6fr;gap:clamp(32px,6vw,96px);align-items:start}
+.lawy-sectie-tekst p{max-width:52ch}
+
+/* expertise — beeld boven, zoals Harvey's platformkaarten */
+.exp-raster{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.exp-kaart{text-decoration:none;display:flex;flex-direction:column;gap:12px;position:relative}
+.exp-beeld{aspect-ratio:4/3;overflow:hidden;background:var(--ivory-2);border-radius:4px}
+.exp-beeld img{width:100%;height:100%;object-fit:cover;filter:saturate(.5);transform:scale(1.02);transition:transform 900ms ease,filter var(--t)}
+.exp-kaart:hover .exp-beeld img{transform:scale(1.06);filter:saturate(.7)}
+.exp-naam{font-family:var(--serif);font-size:30px;font-weight:500;line-height:1.1;margin-top:8px}
+.exp-kort{color:var(--ink-3);font-size:15px;line-height:1.55}
+.exp-meer{font-size:13px;font-weight:600;color:var(--ink);position:relative;padding-bottom:3px;align-self:flex-start}
+.exp-meer::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--bronze);transition:width var(--t)}
+.exp-kaart:hover .exp-meer::after{width:100%}
+
+/* België × Turkije */
+.betr{background:var(--ink);color:var(--ivory);max-width:none;padding:clamp(72px,10vw,150px) var(--pad);position:relative;overflow:hidden}
+.betr-achter{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.55;pointer-events:none}
+.betr-achter::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--ink) 0%,rgba(20,20,19,.35) 40%,rgba(20,20,19,.75) 100%)}
+.betr>*{position:relative}
+.betr-merk{max-width:var(--maxw);margin:0 auto 56px;display:grid;grid-template-columns:auto 1fr auto;align-items:end;gap:28px;color:var(--bronze-2)}
+.betr-land{font-family:var(--serif);font-weight:500;font-size:clamp(44px,8vw,120px);line-height:.9;letter-spacing:-.02em;color:var(--ivory);text-transform:uppercase}
+.betr-kruis{grid-column:2;grid-row:1;justify-self:center;align-self:end;font-family:var(--serif);font-size:clamp(32px,4vw,56px);color:var(--bronze);padding-bottom:6px}
+.betr-lijn{grid-column:2;grid-row:1;width:100%;height:120px;color:var(--bronze)}
+.betr-lijn path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1400ms ease 200ms}
+.zichtbaar .betr-lijn path,.betr-merk-pagina .betr-lijn path{stroke-dashoffset:0}
+.betr-merk-pagina{color:var(--bronze);margin:0 auto 24px;max-width:var(--maxw);padding:0 var(--pad)}
+.betr-merk-pagina .betr-land{color:var(--ink);font-size:clamp(36px,6vw,84px)}
+.betr-tekst{max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:7fr 5fr;gap:clamp(32px,6vw,96px);align-items:start}
+.betr-tekst .eyebrow{color:var(--bronze-2);grid-column:1/3;grid-row:1}
+.betr-tekst .h2{grid-column:1/3;grid-row:2}
+.betr-tekst .lead{color:var(--ivory);opacity:.9;grid-column:1;grid-row:3}
+.betr-lijst{list-style:none;margin:0;padding:0;grid-column:2;grid-row:3/5;border-top:1px solid var(--line-d)}
+.betr-lijst li{padding:12px 0;border-bottom:1px solid var(--line-d);font-size:15px}
+.betr .knop{grid-column:1;grid-row:4;background:var(--ivory);color:var(--ink);border-color:var(--ivory);justify-self:start}
+.betr .knop:hover{background:var(--white);border-color:var(--white)}
+
+/* over */
+.over-kort,.over-groot{display:grid;grid-template-columns:5fr 7fr;gap:clamp(32px,6vw,96px);align-items:center}
+.over-beeld{margin:0;position:relative}
+.over-beeld img{aspect-ratio:4/5;object-fit:cover;background:var(--ivory-2);filter:saturate(.6);border-radius:4px}
+.over-beeld figcaption{position:absolute;left:0;bottom:0;background:var(--ivory);padding:12px 18px 0 0;font-family:var(--serif);font-size:18px;font-style:italic;color:var(--ink-3)}
+.over-groot{align-items:start}
+
+/* stappen */
+.stappen{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:40px;position:relative}
+.stappen::before{content:"";position:absolute;left:0;right:0;top:22px;height:1px;background:var(--line)}
+.donker .stappen::before{background:var(--line-d)}
+.stappen li{position:relative;padding-top:48px}
+.stappen li::before{content:"";position:absolute;left:0;top:18px;width:9px;height:9px;border-radius:50%;background:var(--bronze);outline:6px solid var(--ivory)}
+.donker .stappen li::before{outline-color:var(--ink)}
+.stappen h2,.stappen h3{font-family:var(--serif);font-size:24px;font-weight:600;margin:0 0 8px}
+.stap-nr{position:absolute;top:0;left:20px;font-size:11px;letter-spacing:.2em;color:var(--bronze);font-weight:600}
+.stappen p{font-size:15px;color:var(--ink-3)}
+.donker .stappen p{color:var(--muted-d)}
+.stappen.compact{grid-template-columns:1fr;gap:20px}
+.stappen.compact::before{display:none}
+.stappen.compact li{padding-top:26px}
+.stappen.compact li::before{display:none}
+.stappen.compact .stap-nr{left:0}
+
+/* inzichten */
+.inz-raster{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin-bottom:28px}
+.inz-kaart{text-decoration:none;display:flex;flex-direction:column;gap:12px;border-top:1px solid var(--ink);padding-top:20px}
+.inz-meta{display:flex;gap:14px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--bronze);font-weight:600}
+.inz-meta time{color:var(--muted);letter-spacing:.06em;text-transform:none;font-weight:500}
+.inz-titel{font-family:var(--serif);font-size:27px;font-weight:500;line-height:1.12}
+.inz-kort{color:var(--ink-3);font-size:15px}
+.artikel{max-width:820px}
+.artikel .inz-meta{margin-bottom:22px}
+.artikel .status{background:var(--bronze-3);color:var(--ink);padding:3px 8px;letter-spacing:.08em;text-transform:none;font-weight:600}
+.auteur{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+
+/* tekst + zijkant */
+.tekst-sectie{display:grid;grid-template-columns:7fr 4fr;gap:clamp(32px,6vw,96px);align-items:start}
+.zijkant{border-top:1px solid var(--ink);padding-top:22px;font-size:15px}
+.zij-titel{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--bronze);font-weight:600;margin:0 0 12px}
+.zij-titel+.zij-titel,.zijkant .link-pijl+.zij-titel{margin-top:30px}
+.zij-lijst{list-style:none;margin:0;padding:0}
+.zij-lijst li{padding:9px 0;border-bottom:1px solid var(--line)}
+.zij-beeld{margin:0 0 22px}
+.zij-beeld img{border-radius:4px;filter:saturate(.55)}
+
+/* faq */
+.vraag{border-top:1px solid var(--line);padding:6px 0}
+.vraag:last-of-type{border-bottom:1px solid var(--line)}
+.vraag summary{cursor:pointer;list-style:none;font-family:var(--serif);font-size:23px;font-weight:500;padding:18px 40px 18px 0;position:relative}
+.vraag summary::-webkit-details-marker{display:none}
+.vraag summary::after{content:"+";position:absolute;right:4px;top:14px;font-size:28px;font-weight:300;color:var(--bronze);transition:transform var(--t)}
+.vraag[open] summary::after{transform:rotate(45deg)}
+.vraag p{max-width:64ch;color:var(--ink-3);padding-bottom:12px}
+
+/* tijdlijn */
+.tijdlijn{list-style:none;margin:0;padding:0;border-left:1px solid var(--line)}
+.tijdlijn li{display:grid;grid-template-columns:150px 1fr;gap:24px;padding:18px 0 18px 28px;position:relative}
+.tijdlijn li::before{content:"";position:absolute;left:-5px;top:28px;width:9px;height:9px;border-radius:50%;background:var(--bronze)}
+.tl-jaar{font-family:var(--serif);font-size:24px;font-weight:600;line-height:1.2}
+.tijdlijn p{margin:0;color:var(--ink-3);font-size:15px}
+.tijdlijn b{display:block;margin-bottom:3px}
+.tijdlijn.compact li{padding:12px 0 12px 28px}
+
+/* tarieven/uren */
+.tarieven,.uren{margin:18px 0 22px;border-top:1px solid var(--line)}
+.tarieven div,.uren div{display:flex;justify-content:space-between;gap:20px;padding:12px 0;border-bottom:1px solid var(--line)}
+.tarieven dt,.uren dt{margin:0}.tarieven dd,.uren dd{margin:0;font-family:var(--serif);font-size:22px;font-weight:600}
+.uren dd{font-family:var(--sans);font-size:15px;font-weight:500;text-align:right}
+
+/* contact */
+.contact-raster{display:grid;grid-template-columns:5fr 7fr;gap:clamp(32px,6vw,96px);align-items:start}
+.adres{font-style:normal;line-height:1.6}
+.adres.groot{font-size:18px;margin-bottom:16px}
+.contact-cta{background:var(--ink);color:var(--ivory);max-width:none;padding:clamp(72px,10vw,150px) var(--pad);position:relative;overflow:hidden}
+.contact-cta>*{max-width:var(--maxw);margin-left:auto;margin-right:auto;position:relative}
+.contact-cta .eyebrow{color:var(--bronze-2)}
+.contact-cta .h2{font-size:clamp(38px,5.5vw,76px)}
+.contact-cta.klein{padding:clamp(56px,7vw,96px) var(--pad)}
+.contact-cta.klein .h2{font-size:clamp(30px,4vw,48px)}
+.cta-acties{display:flex;gap:14px;flex-wrap:wrap;margin:32px auto 48px}
+.cta-gegevens{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;border-top:1px solid var(--line-d);padding-top:32px}
+.cta-gegevens dt{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--bronze-2);margin-bottom:8px;font-weight:600}
+.cta-gegevens dd{margin:0;font-size:14.5px;line-height:1.6}
+.cta-gegevens a{text-decoration:none;border-bottom:1px solid rgba(241,239,234,.3)}
+.cta-achter{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.35;max-width:none!important;margin:0!important;pointer-events:none}
+.cta-achter::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,19,.6),var(--ink) 85%)}
+
+/* voet */
+.voet{background:var(--ink);color:var(--ivory);padding:clamp(56px,7vw,96px) var(--pad) 32px;display:grid;grid-template-columns:2fr 1fr 1fr 1.2fr;gap:40px;max-width:none;border-top:1px solid var(--line-d)}
+.voet>*{grid-column:auto}
+.voet-titel{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--bronze-2);font-weight:600;margin:0 0 14px;border:0;padding:0}
+.voet ul{list-style:none;margin:0;padding:0;font-size:14.5px}
+.voet li{padding:5px 0}.voet a{text-decoration:none}
+.voet .fijn{color:var(--muted-d)}
+.voet-merk .adres{margin:24px 0}
+.lawy-badge{display:inline-block;margin-top:8px;background:var(--ivory);padding:4px;border-radius:3px}
+.voet-onder{grid-column:1/-1;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid var(--line-d);padding-top:20px;margin-top:20px;font-size:12.5px;color:var(--muted-d)}
+.lawy-credit a{color:var(--ivory)}
+
+/* Lawy op deze site: als keurmerk, niet als merk. De module, de knop, de
+   oproep en de lade zijn onderdelen van háár site, in háár lettertype. Lawy
+   verschijnt op drie plaatsen: de profielkaart, de badge in de voet, en één
+   gedempte creditregel. */
+lawy-intake{display:block}
+.li-vak{background:var(--white);border:1px solid var(--line);padding:26px 28px 22px}
+.li-titel{font-family:var(--serif);font-size:26px;font-weight:500;line-height:1.15;margin:0 0 14px}
+.li-lijn{height:1px;background:var(--line);margin:0 0 20px;position:relative;overflow:hidden}
+.li-lijn span{position:absolute;left:0;top:0;bottom:0;width:50%;background:var(--bronze);transition:width 400ms cubic-bezier(.2,.7,.2,1)}
+.li-vak[data-stap="2"] .li-lijn span{width:100%}
+.li-vraag2{font-family:var(--serif);font-size:20px;font-weight:500;margin:0 0 10px}
+.li-chips{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:20px}
+.li-chip{appearance:none;background:var(--ivory);border:1px solid var(--line);padding:11px 15px;font:500 13.5px/1 var(--sans);cursor:pointer;color:var(--ink);transition:background var(--t),border-color var(--t),color var(--t)}
+.li-chip:hover{border-color:var(--ink)}
+.li-chip[aria-pressed="true"]{background:var(--ink);color:var(--white);border-color:var(--ink)}
+.li-stap{animation:li-in 240ms cubic-bezier(.2,.7,.2,1)}
+@keyframes li-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.li-voet{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:18px}
+.li-terug{appearance:none;background:none;border:0;color:var(--muted);font:500 13px/1 var(--sans);cursor:pointer;padding:8px 0}
+.li-terug:hover{color:var(--ink)}
+.lawy-credit-regel{margin:0 0 0 auto;font-size:12px;color:var(--muted)}
+.lawy-credit-regel a{color:inherit;text-decoration:none;border-bottom:1px solid var(--line)}
+.lawy-credit-regel a:hover{color:var(--ink);border-color:var(--ink)}
+/* in het donkere hero-kader */
+.kader-inhoud .li-vak{background:var(--ink-2);border-color:var(--line-d);color:var(--ivory)}
+.kader-inhoud .li-titel,.kader-inhoud .li-vraag2{color:var(--ivory)}
+.kader-inhoud .li-lijn{background:var(--line-d)}
+.kader-inhoud .li-chip{background:transparent;border-color:rgba(241,239,234,.22);color:var(--ivory)}
+.kader-inhoud .li-chip:hover{border-color:var(--ivory)}
+.kader-inhoud .li-chip[aria-pressed="true"]{background:var(--ivory);color:var(--ink);border-color:var(--ivory)}
+.kader-inhoud .li-voet{border-color:var(--line-d)}
+.kader-inhoud .knop{background:var(--ivory);color:var(--ink);border-color:var(--ivory)}
+.kader-inhoud .knop:hover{background:var(--white)}
+.kader-inhoud .li-terug,.kader-inhoud .lawy-credit-regel{color:var(--muted-d)}
+.kader-inhoud .lawy-credit-regel a{border-color:var(--line-d)}
+.kader-inhoud .lawy-credit-regel a:hover{color:var(--ivory);border-color:var(--ivory)}
+lawy-cta{display:block;max-width:var(--maxw);margin:0 auto;padding:0 var(--pad) clamp(40px,5vw,64px)}
+.lc-vak{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.lc-tekst{font-family:var(--serif);font-size:22px;font-weight:500}
+lawy-kaart{display:block;max-width:420px;margin-top:0;justify-self:end;width:100%}
+lawy-kaart iframe{width:100%;height:440px;border:1px solid var(--line);background:var(--white)}
+lawy-kaart .fijn{margin-top:10px}
+lawy-kaart .fijn a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line)}
+lawy-kaart .fijn a:hover{color:var(--ink);border-color:var(--ink)}
+lawy-floating{position:fixed;right:22px;bottom:22px;z-index:60}
+.lf-knop{appearance:none;background:var(--ink);color:var(--white);border:1px solid rgba(241,239,234,.15);padding:14px 18px;font:600 13px/1 var(--sans);letter-spacing:.01em;cursor:pointer;box-shadow:0 10px 30px rgba(20,20,19,.3);transition:background var(--t)}
+.lf-knop:hover{background:var(--ink-3)}
+.lf-knop .lf-alt{display:none}
+.lf-knop:hover .lf-std{display:none}.lf-knop:hover .lf-alt{display:inline}
+lawy-drawer{position:fixed;inset:0;z-index:70;pointer-events:none}
+.ld-achter{position:absolute;inset:0;background:rgba(20,20,19,.5);opacity:0;transition:opacity 200ms ease}
+.ld-paneel{position:absolute;top:0;right:0;bottom:0;width:min(460px,100%);background:var(--ivory);transform:translateX(100%);transition:transform 320ms cubic-bezier(.2,.7,.2,1);display:flex;flex-direction:column;box-shadow:-20px 0 60px rgba(20,20,19,.25)}
+lawy-drawer.open{pointer-events:auto}
+lawy-drawer.open .ld-achter{opacity:1}
+lawy-drawer.open .ld-paneel{transform:none}
+.ld-kop{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:26px 28px 0}
+.ld-titel{font-family:var(--serif);font-size:28px;font-weight:500;line-height:1.1;margin:0}
+.ld-sluit{appearance:none;background:none;border:1px solid var(--line);width:44px;height:44px;cursor:pointer;font-size:24px;line-height:1;flex:0 0 auto}
+.ld-body{padding:18px 28px 28px;overflow:auto;flex:1;display:flex;flex-direction:column;gap:16px}
+.ld-body p{margin:0;color:var(--ink-3);font-size:14.5px}
+.ld-body iframe{width:100%;height:440px;border:1px solid var(--line);background:var(--white);flex:0 0 auto}
+.ld-body .knop{align-self:flex-start}
+.ld-body .lawy-credit-regel{margin-top:auto}
+body.ld-open{overflow:hidden}
+.voet .lawy-badge{display:inline-block;margin-top:22px;line-height:0}
+
+/* onthulling */
+.onthul{opacity:0;transform:translateY(14px);transition:opacity 600ms ease,transform 600ms ease}
+.onthul.zichtbaar{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation:none!important}.betr-lijn path{stroke-dashoffset:0}.onthul{opacity:1;transform:none}}
+
+/* mobiel */
+.mobiel-cta{display:none}
+@media (max-width:960px){
+  .hero{grid-template-columns:1fr}
+  .hero-zij{padding-top:0}
+  .kader-donker{grid-template-columns:1fr}
+  .kader-beeld{min-height:240px}
+  .kader-beeld::after{background:linear-gradient(180deg,rgba(20,20,19,0) 40%,var(--ink) 100%)}
+  .muur ul{grid-template-columns:repeat(2,1fr)}
+  .cijfers{grid-template-columns:repeat(2,1fr)}
+  .cijfers li:nth-child(3){border-left:0;padding-left:0}
+  .lawy-sectie,.over-kort,.over-groot,.tekst-sectie,.contact-raster,.betr-tekst{grid-template-columns:1fr}
+  .betr-tekst .h2,.betr-tekst .lead,.betr-lijst,.betr .knop{grid-column:1;grid-row:auto}
+  .exp-raster{grid-template-columns:repeat(2,1fr)}
+  .stappen,.inz-raster{grid-template-columns:1fr;gap:28px}
+  .stappen::before{display:none}
+  .cta-gegevens{grid-template-columns:repeat(2,1fr)}
+  .voet{grid-template-columns:1fr 1fr}
+  .tijdlijn li{grid-template-columns:1fr;gap:4px}
+}
+@media (max-width:680px){
+  .kop{padding:12px var(--pad)}
+  .mobiel-cta{display:block;position:fixed;left:0;right:0;bottom:0;z-index:55;padding:12px var(--pad);background:rgba(241,239,234,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line)}
+  .mobiel-cta .knop{width:100%;justify-content:center}
+  lawy-floating{display:none}
+  .exp-raster{grid-template-columns:1fr}
+  .voet{grid-template-columns:1fr}
+  .cta-gegevens{grid-template-columns:1fr}
+  .cijfers{grid-template-columns:1fr}
+  .cijfers li{border-left:0;padding-left:0;border-top:1px solid var(--line-d)}
+  .cijfers li:first-child{border-top:0}
+  .muur ul{grid-template-columns:1fr}
+  .kader-inhoud{padding:26px 22px}
+  .ld-paneel{width:100%}
+  body{padding-bottom:72px}
+}
+
+body.menu-open lawy-floating,body.menu-open .mobiel-cta{display:none}
+@media (max-width:960px){.beo-raster{grid-template-columns:1fr}.voet{grid-template-columns:1fr 1fr}}
+@media (max-width:680px){.voet{grid-template-columns:1fr}}
+
+/* beoordelingen: de kop is van de site, het blok eronder is de Lawy-widget
+   (eigen shadow root, laadt zijn eigen stijl). Alleen de omtrek regelen we. */
+.beo-kop{max-width:66ch;margin-bottom:28px}
+[data-lawy-beoordelingen]{display:block}
